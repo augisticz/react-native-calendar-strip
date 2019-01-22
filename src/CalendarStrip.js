@@ -90,7 +90,7 @@ class CalendarStrip extends Component {
     datesBlacklist: undefined,
     disabledDateOpacity: 0.3,
     customDatesStyles: [],
-    responsiveSizingOffset: -5,
+    responsiveSizingOffset: -6,
     innerStyle: { flex: 1 },
     maxDayComponentSize: 80,
     minDayComponentSize: 10,
