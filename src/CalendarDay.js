@@ -4,7 +4,7 @@
 
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {polyfill} from 'react-lifecycles-compat';
+import { polyfill } from 'react-lifecycles-compat';
 
 import { Text, View, LayoutAnimation, TouchableOpacity } from "react-native";
 import styles from "./Calendar.style.js";
@@ -137,14 +137,14 @@ class CalendarDay extends Component {
       validDots = marking.dots.filter(d => (d && d.color)).map((dot, index) => {
         return (
           <View key={dot.key ? dot.key : index} style={[baseDotStyle,
-            { backgroundColor: marking.selected && dot.selectedDotColor ? dot.selectedDotColor : dot.color }]}/>
+            { backgroundColor: marking.selected && dot.selectedDotColor ? dot.selectedDotColor : dot.color }]} />
         );
       });
     }
 
     return (
       <View style={styles.dotsContainer}>
-        { validDots }
+        {validDots}
       </View>
     );
   }
@@ -224,8 +224,7 @@ class CalendarDay extends Component {
           key={this.props.date}
           style={[
             styles.dateContainer,
-            responsiveDateContainerStyle,
-            dateViewStyle
+            responsiveDateContainerStyle
           ]}
         >
           {this.props.showDayName && (
@@ -233,21 +232,24 @@ class CalendarDay extends Component {
               style={[dateNameStyle, { fontSize: this.state.dateNameFontSize }]}
               allowFontScaling={this.props.allowDayTextScaling}
             >
-              {this.props.date.format("ddd").toUpperCase().substring(0,2)}
+              {this.props.date.format("ddd").toUpperCase().substring(0, 2)}
             </Text>
           )}
           {this.props.showDayNumber && (
-            <View>
+            <View style={[
+              dateViewStyle,
+              dateNumberStyle
+            ]}>
               <Text
                 style={[
-                    { fontSize: this.state.dateNumberFontSize },
-                    dateNumberStyle
+                  { fontSize: this.state.dateNumberFontSize },
+                  dateNumberStyle
                 ]}
                 allowFontScaling={this.props.allowDayTextScaling}
               >
                 {this.props.date.date()}
               </Text>
-              { this.renderDots() }
+              {this.renderDots()}
             </View>
           )}
         </View>
