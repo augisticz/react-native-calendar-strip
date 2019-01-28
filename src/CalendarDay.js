@@ -5,8 +5,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { polyfill } from 'react-lifecycles-compat';
+import moment from 'moment'
 
-import { Text, View, LayoutAnimation, TouchableOpacity } from "react-native";
+import { Text, View, LayoutAnimation, TouchableOpacity, Platform } from "react-native";
 import styles from "./Calendar.style.js";
 
 class CalendarDay extends Component {
@@ -114,6 +115,12 @@ class CalendarDay extends Component {
     }
   }
 
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.selected !== nextProps.selected) {
+      this.setState({ selected: nextProps.selected })
+    }
+  }
+
   calcSizes(props) {
     return {
       containerSize: Math.round(props.size),
@@ -151,6 +158,7 @@ class CalendarDay extends Component {
 
   render() {
     // Defaults for disabled state
+    let currentDateStyle = {}
     let dateNameStyle = [styles.dateName, this.props.enabled ? this.props.dateNameStyle : this.props.disabledDateNameStyle];
     let dateNumberStyle = [styles.dateNumber, this.props.enabled ? this.props.dateNumberStyle : this.props.disabledDateNumberStyle];
     let dateViewStyle = this.props.enabled
@@ -208,13 +216,65 @@ class CalendarDay extends Component {
       }
     }
 
+    if ((moment(this.props.date).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) && !this.state.selected) {
+      // Enabled state
+      //The user can disable animation, so that is why I use selection type
+      //If it is background, the user have to input colors for animation
+      //If it is border, the user has to input color for border animation
+      switch (this.props.daySelectionAnimation.type) {
+        case "background":
+          dateViewStyle.push({ backgroundColor: this.props.daySelectionAnimation.highlightColor });
+          break;
+        case "border":
+          dateViewStyle.push({
+            borderColor: this.props.daySelectionAnimation.borderHighlightColor,
+            borderWidth: this.props.daySelectionAnimation.borderWidth
+          });
+          break;
+        default:
+          // No animation styling by default
+          break;
+      }
+
+      dateNameStyle = [styles.dateName, this.props.dateNameStyle];
+      dateNumberStyle = [styles.dateNumber, this.props.dateNumberStyle];
+      if (
+        this.props.styleWeekend &&
+        (this.props.date.isoWeekday() === 6 ||
+          this.props.date.isoWeekday() === 7)
+      ) {
+        dateNameStyle = [
+          styles.weekendDateName,
+          this.props.weekendDateNameStyle
+        ];
+        dateNumberStyle = [
+          styles.weekendDateNumber,
+          this.props.weekendDateNumberStyle
+        ];
+      }
+      if ((moment(this.props.date).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) && !this.state.selected) {
+        let dateLength = moment(this.props.date).date().toString().length
+
+        dateNameStyle = [styles.dateName, this.props.highlightDateNameStyle];
+
+        dateNumberStyle = [
+          {
+            paddingVertical: Platform.select({ ios: 2, android: dateLength == 1 ? 1.5 : 1 }),
+            paddingHorizontal: Platform.select({ ios: dateLength == 1 ? 4 : 2.5, android: dateLength == 1 ? 4 : 2 })
+          },
+          styles.dateNumber,
+          this.props.highlightDateNumberStyle
+        ];
+        currentDateStyle.backgroundColor = '#eee'
+      }
+    }
+
     let responsiveDateContainerStyle = {
       width: this.state.containerSize,
       height: this.state.containerSize,
       borderRadius: this.state.containerBorderRadius,
       padding: this.state.containerPadding
     };
-
 
     return (
       <TouchableOpacity
@@ -238,7 +298,8 @@ class CalendarDay extends Component {
           {this.props.showDayNumber && (
             <View style={[
               dateViewStyle,
-              dateNumberStyle
+              dateNumberStyle,
+              currentDateStyle
             ]}>
               <Text
                 style={[
