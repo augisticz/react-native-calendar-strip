@@ -258,12 +258,15 @@ class CalendarDay extends Component {
         dateNameStyle = [styles.dateName, this.props.highlightDateNameStyle];
 
         dateNumberStyle = [
-          {
-            paddingVertical: Platform.select({ ios: 2, android: dateLength == 1 ? 1.5 : 1 }),
-            paddingHorizontal: Platform.select({ ios: dateLength == 1 ? 4 : 2.5, android: dateLength == 1 ? 4 : 2 })
-          },
           styles.dateNumber,
-          this.props.highlightDateNumberStyle
+          {
+            color: this.props.highlightDateNumberStyle.color,
+            fontSize: this.props.highlightDateNumberStyle.fontSize,
+            borderRadius: this.props.highlightDateNumberStyle.borderRadius,
+            paddingVertical: Platform.select({ ios: 2, android: dateLength === 1 ? 1.5 : 1 }),
+            paddingHorizontal: Platform.select({ ios: dateLength === 1 ? 4 : 2.5, android: dateLength === 1 ? 4 : 2 })
+          }
+
         ];
         currentDateStyle.backgroundColor = '#eee'
       }
