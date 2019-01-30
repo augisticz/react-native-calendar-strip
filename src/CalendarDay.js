@@ -303,14 +303,14 @@ class CalendarDay extends Component {
 
         currentDateStyle.backgroundColor = 'transparent'
       } else if ((moment(this.props.date).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) && !this.state.selected) {
-        dateNameStyle = [styles.dateName, { color: '#EAD7D7' }];
+        dateNameStyle = [styles.dateName, { color: '#deb1b1' }];
 
         dateNumberStyle = [
           styles.dateNumber,
           {
             fontSize: this.props.highlightDateNumberStyle.fontSize,
             marginTop: 2.5,
-            color: '#EAD7D7'
+            color: '#deb1b1'
           }
 
         ];
