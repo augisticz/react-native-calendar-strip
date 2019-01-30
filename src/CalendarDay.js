@@ -6,9 +6,16 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { polyfill } from 'react-lifecycles-compat';
 import moment from 'moment'
-
-import { Text, View, LayoutAnimation, TouchableOpacity, Platform } from "react-native";
+import {
+  Text,
+  View,
+  LayoutAnimation,
+  TouchableOpacity,
+  Dimensions
+} from "react-native";
 import styles from "./Calendar.style.js";
+
+const { width, height } = Dimensions.get('window')
 
 class CalendarDay extends Component {
   static propTypes = {
@@ -156,6 +163,34 @@ class CalendarDay extends Component {
     );
   }
 
+  renderTriangle = () => {
+    triangleStyle = {
+      position: 'absolute',
+      top: 0,
+      left: '38%',
+      width: 0,
+      height: 0,
+      backgroundColor: 'transparent',
+      borderStyle: 'solid',
+      borderLeftWidth: 7,
+      borderRightWidth: 7,
+      borderBottomWidth: 7,
+      borderLeftColor: 'transparent',
+      borderRightColor: 'transparent',
+      borderBottomColor: '#AD0B0E',
+      transform: [
+        { rotate: '180deg' }
+      ]
+    }
+
+    if (this.props.showDayName && this.props.showDayNumber) {
+      if (this.state.selected) {
+        return <View style={triangleStyle} />
+      }
+    }
+
+  }
+
   render() {
     // Defaults for disabled state
     let currentDateStyle = {}
@@ -178,7 +213,7 @@ class CalendarDay extends Component {
       //If it is border, the user has to input color for border animation
       switch (this.props.daySelectionAnimation.type) {
         case "background":
-          dateViewStyle.push({ backgroundColor: this.props.daySelectionAnimation.highlightColor });
+          dateViewStyle.push({ backgroundColor: 'transparent' });
           break;
         case "border":
           dateViewStyle.push({
@@ -216,7 +251,7 @@ class CalendarDay extends Component {
       }
     }
 
-    if ((moment(this.props.date).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) && !this.state.selected) {
+    if ((moment(this.props.date).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD'))) {
       // Enabled state
       //The user can disable animation, so that is why I use selection type
       //If it is background, the user have to input colors for animation
@@ -252,23 +287,35 @@ class CalendarDay extends Component {
           this.props.weekendDateNumberStyle
         ];
       }
-      if ((moment(this.props.date).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) && !this.state.selected) {
-        let dateLength = moment(this.props.date).date().toString().length
 
-        dateNameStyle = [styles.dateName, this.props.highlightDateNameStyle];
+      if ((moment(this.props.date).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) && this.state.selected) {
+        dateNameStyle = [styles.dateName, { color: '#AD0B0E' }];
 
         dateNumberStyle = [
           styles.dateNumber,
           {
-            color: this.props.highlightDateNumberStyle.color,
             fontSize: this.props.highlightDateNumberStyle.fontSize,
-            borderRadius: this.props.highlightDateNumberStyle.borderRadius,
-            paddingVertical: Platform.select({ ios: 2, android: dateLength === 1 ? 1.5 : 1 }),
-            paddingHorizontal: Platform.select({ ios: dateLength === 1 ? 4 : 2.5, android: dateLength === 1 ? 4 : 2 })
+            marginTop: 2.5,
+            color: '#AD0B0E'
           }
 
         ];
-        currentDateStyle.backgroundColor = '#eee'
+
+        currentDateStyle.backgroundColor = 'transparent'
+      } else if ((moment(this.props.date).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) && !this.state.selected) {
+        dateNameStyle = [styles.dateName, { color: '#EAD7D7' }];
+
+        dateNumberStyle = [
+          styles.dateNumber,
+          {
+            fontSize: this.props.highlightDateNumberStyle.fontSize,
+            marginTop: 2.5,
+            color: '#EAD7D7'
+          }
+
+        ];
+
+        currentDateStyle.backgroundColor = 'transparent'
       }
     }
 
@@ -283,6 +330,7 @@ class CalendarDay extends Component {
       <TouchableOpacity
         onPress={this.props.onDateSelected.bind(this, this.props.date)}
       >
+        {this.renderTriangle()}
         <View
           key={this.props.date}
           style={[
@@ -301,7 +349,6 @@ class CalendarDay extends Component {
           {this.props.showDayNumber && (
             <View style={[
               dateViewStyle,
-              dateNumberStyle,
               currentDateStyle
             ]}>
               <Text

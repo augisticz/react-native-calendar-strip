@@ -7,19 +7,20 @@
   "_phantomChildren": {},
   "_requested": {
     "type": "git",
-    "raw": "augisticz/react-native-calendar-strip",
-    "rawSpec": "augisticz/react-native-calendar-strip",
+    "raw": "react-native-calendar-strip@github:augisticz/react-native-calendar-strip",
+    "name": "react-native-calendar-strip",
+    "escapedName": "react-native-calendar-strip",
+    "rawSpec": "github:augisticz/react-native-calendar-strip",
     "saveSpec": "github:augisticz/react-native-calendar-strip",
     "fetchSpec": null,
     "gitCommittish": null
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
-  "_resolved": "github:augisticz/react-native-calendar-strip#27d903c283997e3f743b8b67cf91799bb939a75c",
-  "_spec": "augisticz/react-native-calendar-strip",
-  "_where": "/Users/augisticz/Workspace/React_Native/scorescoreApp",
+  "_resolved": "github:augisticz/react-native-calendar-strip#b9763d43083e134bea972ef5e2bff040e3ebd50a",
+  "_spec": "react-native-calendar-strip@github:augisticz/react-native-calendar-strip",
+  "_where": "/Users/augisticz/Workspace/rn/scorescoreApp",
   "author": {
     "name": "Bogdan Begovic",
     "email": "bogdanbegovic@gmail.com"
