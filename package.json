@@ -1,15 +1,19 @@
 {
+  "_args": [
+    [
+      "github:augisticz/react-native-calendar-strip",
+      "/Users/augisticz/Workspace/rn/scorescoreApp"
+    ]
+  ],
   "_from": "github:augisticz/react-native-calendar-strip",
-  "_id": "react-native-calendar-strip@1.3.7",
+  "_id": "react-native-calendar-strip@github:augisticz/react-native-calendar-strip#b9763d43083e134bea972ef5e2bff040e3ebd50a",
   "_inBundle": false,
   "_integrity": "",
   "_location": "/react-native-calendar-strip",
   "_phantomChildren": {},
   "_requested": {
     "type": "git",
-    "raw": "react-native-calendar-strip@github:augisticz/react-native-calendar-strip",
-    "name": "react-native-calendar-strip",
-    "escapedName": "react-native-calendar-strip",
+    "raw": "github:augisticz/react-native-calendar-strip",
     "rawSpec": "github:augisticz/react-native-calendar-strip",
     "saveSpec": "github:augisticz/react-native-calendar-strip",
     "fetchSpec": null,
@@ -19,7 +23,7 @@
     "/"
   ],
   "_resolved": "github:augisticz/react-native-calendar-strip#b9763d43083e134bea972ef5e2bff040e3ebd50a",
-  "_spec": "react-native-calendar-strip@github:augisticz/react-native-calendar-strip",
+  "_spec": "github:augisticz/react-native-calendar-strip",
   "_where": "/Users/augisticz/Workspace/rn/scorescoreApp",
   "author": {
     "name": "Bogdan Begovic",

@@ -15,8 +15,6 @@ import {
 } from "react-native";
 import styles from "./Calendar.style.js";
 
-const { width, height } = Dimensions.get('window')
-
 class CalendarDay extends Component {
   static propTypes = {
     date: PropTypes.object.isRequired,
@@ -165,9 +163,10 @@ class CalendarDay extends Component {
 
   renderTriangle = () => {
     triangleStyle = {
+      flexDirection: 'row',
+      alignSelf: 'center',
       position: 'absolute',
       top: 0,
-      left: '38%',
       width: 0,
       height: 0,
       backgroundColor: 'transparent',
@@ -303,14 +302,14 @@ class CalendarDay extends Component {
 
         currentDateStyle.backgroundColor = 'transparent'
       } else if ((moment(this.props.date).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) && !this.state.selected) {
-        dateNameStyle = [styles.dateName, { color: '#EAD7D7' }];
+        dateNameStyle = [styles.dateName, { color: '#deb1b1' }];
 
         dateNumberStyle = [
           styles.dateNumber,
           {
             fontSize: this.props.highlightDateNumberStyle.fontSize,
             marginTop: 2.5,
-            color: '#EAD7D7'
+            color: '#deb1b1'
           }
 
         ];
@@ -330,7 +329,6 @@ class CalendarDay extends Component {
       <TouchableOpacity
         onPress={this.props.onDateSelected.bind(this, this.props.date)}
       >
-        {this.renderTriangle()}
         <View
           key={this.props.date}
           style={[
@@ -338,6 +336,7 @@ class CalendarDay extends Component {
             responsiveDateContainerStyle
           ]}
         >
+          {this.renderTriangle()}
           {this.props.showDayName && (
             <Text
               style={[dateNameStyle, { fontSize: this.state.dateNameFontSize }]}
